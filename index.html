@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xiyyxs | Main</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fox-dark: #2c1810;
+            --fox-orange: #e67e22;
+            --fox-cream: #fdf2e9;
+            --fox-white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--fox-dark);
+            color: var(--fox-cream);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(230, 126, 34, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(243, 156, 18, 0.05) 0%, transparent 40%);
+            perspective: 1000px;
+        }
+
+        .main-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.95);
+            animation: appAppear 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes appAppear {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .bio-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+            
+        }
+
+        .avatar-box {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            transform: translateZ(20px);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid var(--fox-orange);
+            padding: 4px;
+            background: var(--fox-dark);
+        }
+
+        .nickname {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, var(--fox-cream), var(--fox-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateZ(15px);
+        }
+
+        .about-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(253, 242, 233, 0.7);
+            margin-bottom: 35px;
+            font-weight: 300;
+            transform: translateZ(10px);
+        }
+
+        .setup-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--fox-orange);
+            color: var(--fox-dark);
+            padding: 16px 32px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 40px;
+            transform: translateZ(25px);
+        }
+
+        .setup-link:hover {
+            transform: scale(1.05) translateY(-3px) translateZ(30px);
+            background: var(--fox-white);
+            box-shadow: 0 15px 30px rgba(230, 126, 34, 0.4);
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            transform: translateZ(15px);
+        }
+
+        .social-item {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--fox-cream);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .social-item:hover {
+            background: var(--fox-orange);
+            color: var(--fox-dark);
+            border-color: var(--fox-orange);
+            transform: translateY(-5px) rotate(8deg) translateZ(20px);  
+        }
+
+        .layout-container {
+            align-items: center;
+            display: flex;
+            gap: 20px;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            opacity: 0;
+            animation: appAppear 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .setup-wrapper {
+            width: 0;
+            display: flex;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+
+        .setup-wrapper.active {
+            width: 340px;
+            opacity: 1;
+            padding: 20px;
+            pointer-events: all;
+        }
+
+        .setup-container {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            text-align: left;
+            padding: 40px 25px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+            min-width: 340px;
+            width: 340px;
+        }
+
+        .setup-link {
+            z-index: 20;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .setup-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 18px;
+            color: var(--fox-orange);
+            margin-bottom: 20px;
+            transform: translateZ(20px);
+        }
+
+        .setup-list {
+            list-style: none;
+            transform: translateZ(15px);
+        }
+
+        .setup-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .setup-item i {
+            width: 20px;
+            color: var(--fox-orange);
+            text-align: center;
+        }
+
+        .setup-label {
+            color: rgba(253, 242, 233, 0.5);
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 480px) {
+            .bio-container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layout-container" id="layout">
+
+    <div class="main-wrapper" id="card">
+        <div class="bio-container">
+            <div class="avatar-box">
+                <img src="avatar.jpg" alt="Avatar" class="avatar-img">
+            </div>
+
+            <h1 class="nickname">XIYYXS</h1>
+            
+            <p class="about-text">
+                Im xiyyxs. Playing games like Valorant, World of Warcraft etc. Creating sites and learning C#, another IT languages.
+            </p>
+
+            <a href="#" class="setup-link" id="toggleSetup">
+                <i class="fas fa-desktop"></i>
+                <span>PC Setup</span>
+            </a>
+
+            <div class="social-grid">
+                <a href="https://steamcommunity.com/profiles/76561199028735724" class="social-item"><i class="fab fa-steam"></i></a>
+                <a href="https://t.me/xiyyxslife" class="social-item"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.youtube.com/@xiyyxs" class="social-item"><i class="fab fa-youtube"></i></a>  
+                <a href="https://github.com/xiyyxs" class="social-item"><i class="fab fa-github"></i></a>
+                <a href="https://donationalerts.com/r/xiyyxs" class="social-item"><i class="fas fa-hand-holding-dollar"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="setup-wrapper" id="setupPanel">
+        <div class="setup-container card">
+            <h2 class="setup-title" style="font-family: 'Unbounded'; color: var(--fox-orange); margin-bottom: 20px; transform: translateZ(20px);">Hardware & Gear</h2>
+            <ul class="setup-list" style="list-style: none; transform: translateZ(15px);">
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-microchip" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">CPU</span><br><strong>Intel i5-13400F</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-memory" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">GPU</span><br><strong>NVIDIA RTX 3060 Ti</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-mouse" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Mouse</span><br><strong>Logitech G102</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-keyboard" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Keyboard</span><br><strong>Dark Project 87 One Fuji White</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-mobile-alt" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Phone</span><br><strong>IPhone 14 Pro</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-gamepad" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Console</span><br><strong>Xbox Series X</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-headphones" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Headset</span><br><strong>Fifine Ampligame H9</strong></div>
+                </li>
+                <li class="setup-item" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 13px;">
+                    <i class="fas fa-microphone" style="color: var(--fox-orange); width: 20px; text-align: center;"></i>
+                    <div><span style="color: rgba(253, 242, 233, 0.5); font-size: 10px; text-transform: uppercase;">Microphone</span><br><strong>Fifine Ampligame A8</strong></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        const cards = document.getElementById('card'); 
+        const toggleBtn = document.getElementById('toggleSetup');
+        const setupPanel = document.getElementById('setupPanel');
+        
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            setupPanel.classList.toggle('active');
+            toggleBtn.querySelector('span').textContent = 
+                setupPanel.classList.contains('active') ? "PC Setup" : "PC Setup";
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 35;
+            const y = (window.innerHeight / 2 - e.clientY) / 35;
+            
+            cards.forEach(card => {
+                card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            });
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cards.forEach(card => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        })
+    </script>
+</body>
+</html>
