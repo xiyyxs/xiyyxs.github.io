@@ -37,6 +37,17 @@
             perspective: 1000px;
         }
 
+        * {
+            -webkit-user-select: none;
+            -ms-user-select: none;  
+            user-select: none;   
+            -webkit-touch-callout: none;
+        }
+
+        img {
+            pointer-events: none;
+        }
+
         .main-wrapper {
             position: relative;
             width: 100%;
@@ -73,7 +84,8 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 25px;
-            transform: translateZ(20px);
+            transform: translateZ(50px);
+            transition: transform 0.3s ease;
         }
 
         .avatar-img {
@@ -94,7 +106,7 @@
             background: linear-gradient(45deg, var(--fox-cream), var(--fox-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: translateZ(15px);
+            transform: translateZ(40px);
         }
 
         .about-text {
@@ -119,7 +131,7 @@
             font-size: 14px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 40px;
-            transform: translateZ(25px);
+            transform: translateZ(30px);
         }
 
         .setup-link:hover {
@@ -148,6 +160,7 @@
             text-decoration: none;
             font-size: 18px;
             transition: all 0.3s ease;
+            transform: translateZ(20px);
         }
 
         .social-item:hover {
@@ -244,6 +257,62 @@
             letter-spacing: 1px;
         }
 
+        @media (max-width: 992px) {
+        body {
+            overflow-y: auto; 
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+
+        .layout-container {
+            flex-direction: column; 
+            gap: 30px;
+            width: 100%;
+        }
+
+        .main-wrapper {
+            max-width: 100%;
+            transform: none !important; 
+        }
+
+        .setup-wrapper.active {
+            width: 100%;
+        }
+
+        .setup-container {
+            width: 100%;
+            min-width: unset;
+            height: auto;
+            padding: 30px 20px;
+            transform: none !important;
+        }
+
+        
+        .avatar-box, .nickname, .about-text, .setup-link, .social-grid, .social-item {
+            transform: none !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nickname {
+            font-size: 24px;
+        }
+
+        .about-text {
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .setup-link {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .social-grid {
+            flex-wrap: wrap; 
+        }
+    }
+
         @media (max-width: 480px) {
             .bio-container {
                 padding: 40px 20px;
@@ -325,31 +394,19 @@
     </div>
 
     <script>
-        const cards = document.getElementById('card'); 
-        const toggleBtn = document.getElementById('toggleSetup');
+        document.addEventListener('DOMContentLoaded', () => {
+        const mainCard = document.querySelector('.main-wrapper');
         const setupPanel = document.getElementById('setupPanel');
-        
-        toggleBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            setupPanel.classList.toggle('active');
-            toggleBtn.querySelector('span').textContent = 
-                setupPanel.classList.contains('active') ? "PC Setup" : "PC Setup";
-        });
+        const setupContainer = document.querySelector('.setup-container');
+        const toggleBtn = document.getElementById('toggleSetup');
 
-        document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 35;
-            const y = (window.innerHeight / 2 - e.clientY) / 35;
-            
-            cards.forEach(card => {
-                card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+        if (toggleBtn && setupPanel) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                setupPanel.classList.toggle('active');
             });
-        });
-
-        document.addEventListener('mouseleave', () => {
-            cards.forEach(card => {
-                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
-        })
+        }
+    });
     </script>
 </body>
 </html>
